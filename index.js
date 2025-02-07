@@ -1,6 +1,7 @@
 import http from "http";
 import url from "url";
 import { StringDecoder } from "string_decoder";
+import { mode } from "./config.js";
 
 const server = http.createServer(function (req, res) {
   const parsedUrl = url.parse(req.url, true);
@@ -55,6 +56,6 @@ const routing = {
   hello: handlers.hello,
 };
 
-server.listen("3000", function () {
-  console.log("Server is listening on port:3000");
+server.listen(mode.port, function () {
+  console.log(`Server is listening on port: ${mode.port}`);
 });
