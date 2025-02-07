@@ -1,0 +1,60 @@
+import http from "http";
+import url from "url";
+import { StringDecoder } from "string_decoder";
+
+const server = http.createServer(function (req, res) {
+  const parsedUrl = url.parse(req.url, true);
+  const pathName = parsedUrl.pathname;
+  const query = parsedUrl.query;
+  const method = req.method.toLowerCase();
+
+  const trimmedPath = pathName.split("/").join("");
+  const decoder = new StringDecoder("utf-8");
+
+  let buffer = "";
+  req.on("data", (data) => {
+    buffer += decoder.write(data);
+  });
+
+  req.on("end", () => {
+    buffer += decoder.end();
+    const headers = { "Content-Type": "application/json" };
+    const data = {
+      pathName,
+      method,
+      query,
+      headers,
+      payload: buffer,
+    };
+    const selectedHandler =
+      typeof routing[trimmedPath] !== undefined ? routing[trimmedPath] : false;
+
+    if (!selectedHandler) {
+      res.writeHead(404);
+      res.end("Error: Not found");
+    } else {
+      selectedHandler(data, (statusCode, payload) => {
+        const status = typeof statusCode === "number" ? statusCode : 200;
+        payload = typeof payload === "object" ? payload : {};
+
+        const payloadString = JSON.stringify(payload);
+        res.writeHead(status, headers);
+        res.end(payloadString);
+      });
+    }
+  });
+});
+
+let handlers = {};
+
+handlers.hello = (data, callback) => {
+  callback(406, { data: data.payload });
+};
+
+const routing = {
+  hello: handlers.hello,
+};
+
+server.listen("3000", function () {
+  console.log("Server is listening on port:3000");
+});
