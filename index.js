@@ -67,8 +67,13 @@ handlers.hello = (data, callback) => {
   callback(406, { data: data.payload });
 };
 
+handlers.ping = (data, callback) => {
+  callback(200);
+};
+
 const routing = {
   hello: handlers.hello,
+  ping: handlers.ping,
 };
 
 httpServer.listen(mode.httpPort, function () {
