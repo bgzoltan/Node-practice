@@ -1,12 +1,14 @@
 let environment = {};
 
 environment.development = {
-  port: 3000,
+  httpPort: 3000,
+  httpsPort: 3001,
   name: "development",
 };
 
 environment.production = {
-  port: 50000,
+  httpPort: 50000,
+  httpsPort: 50001,
   name: "production",
 };
 

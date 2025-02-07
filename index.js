@@ -1,9 +1,24 @@
 import http from "http";
+import https from "https";
 import url from "url";
 import { StringDecoder } from "string_decoder";
 import { mode } from "./config.js";
+import fs from "fs";
 
-const server = http.createServer(function (req, res) {
+const httpServer = http.createServer(function (req, res) {
+  server(req, res);
+});
+
+const httpsParams = {
+  cert: fs.readFileSync("./https/cert.pem"),
+  key: fs.readFileSync("./https/key.pem"),
+};
+
+const httpsServer = https.createServer(httpsParams, function (req, res) {
+  server(req, res);
+});
+
+const server = (req, res) => {
   const parsedUrl = url.parse(req.url, true);
   const pathName = parsedUrl.pathname;
   const query = parsedUrl.query;
@@ -44,7 +59,7 @@ const server = http.createServer(function (req, res) {
       });
     }
   });
-});
+};
 
 let handlers = {};
 
@@ -56,6 +71,10 @@ const routing = {
   hello: handlers.hello,
 };
 
-server.listen(mode.port, function () {
-  console.log(`Server is listening on port: ${mode.port}`);
+httpServer.listen(mode.httpPort, function () {
+  console.log(`Server is listening on port: ${mode.httpPort}`);
+});
+
+httpsServer.listen(mode.httpsPort, function () {
+  console.log(`Server is listening on port: ${mode.httpsPort}`);
 });
