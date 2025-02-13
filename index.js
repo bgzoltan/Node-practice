@@ -4,6 +4,13 @@ import url from "url";
 import { StringDecoder } from "string_decoder";
 import { mode } from "./config.js";
 import fs from "fs";
+import { lib as _data } from "./lib/data.js";
+
+// Testing
+// @TODO remove it later
+_data.create("test", "newFile", { name: "Zoli" }, function (err) {
+  console.log("This error", err);
+});
 
 const httpServer = http.createServer(function (req, res) {
   server(req, res);
@@ -42,21 +49,23 @@ const server = (req, res) => {
       headers,
       payload: buffer,
     };
+
     const selectedHandler =
       typeof routing[trimmedPath] !== undefined ? routing[trimmedPath] : false;
+
+    const handlerCallback = (statusCode, payload) => {
+      const status = typeof statusCode === "number" ? statusCode : 200;
+      payload = typeof payload === "object" ? payload : {};
+      const payloadString = JSON.stringify(payload);
+      res.writeHead(status, headers);
+      res.end(payloadString);
+    };
 
     if (!selectedHandler) {
       res.writeHead(404);
       res.end("Error: Not found");
     } else {
-      selectedHandler(data, (statusCode, payload) => {
-        const status = typeof statusCode === "number" ? statusCode : 200;
-        payload = typeof payload === "object" ? payload : {};
-
-        const payloadString = JSON.stringify(payload);
-        res.writeHead(status, headers);
-        res.end(payloadString);
-      });
+      selectedHandler(data, handlerCallback);
     }
   });
 };
@@ -67,12 +76,17 @@ handlers.hello = (data, callback) => {
   callback(406, { data: data.payload });
 };
 
+handlers.write = (data, callback) => {
+  callback(200, { data: data.payload });
+};
+
 handlers.ping = (data, callback) => {
   callback(200);
 };
 
 const routing = {
   hello: handlers.hello,
+  write: handlers.write,
   ping: handlers.ping,
 };
 
