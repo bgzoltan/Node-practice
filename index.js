@@ -11,6 +11,13 @@ import { lib as _data } from "./lib/data.js";
 _data.create("test", "newFile", { name: "Zoli" }, function (err) {
   console.log("This error", err);
 });
+_data.read("test", "newFile1", function (err, data) {
+  if (err) {
+    console.log("Error:", err);
+  } else {
+    console.log("Data:", data);
+  }
+});
 
 const httpServer = http.createServer(function (req, res) {
   server(req, res);
