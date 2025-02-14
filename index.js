@@ -18,6 +18,13 @@ _data.read("test", "newFile1", function (err, data) {
     console.log("Data:", data);
   }
 });
+_data.update("test", "newFile", { name: "Gabi" }, function (err) {
+  if (err) {
+    console.log("Error:", err);
+  } else {
+    console.log("Success");
+  }
+});
 
 const httpServer = http.createServer(function (req, res) {
   server(req, res);
