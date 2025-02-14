@@ -8,21 +8,29 @@ import { lib as _data } from "./lib/data.js";
 
 // Testing
 // @TODO remove it later
-_data.create("test", "newFile", { name: "Zoli" }, function (err) {
-  console.log("This error", err);
-});
-_data.read("test", "newFile1", function (err, data) {
+// _data.create("test", "newFile", { name: "Zoli" }, function (err) {
+//   console.log("This error", err);
+// });
+// _data.read("test", "newFile1", function (err, data) {
+//   if (err) {
+//     console.log("Error:", err);
+//   } else {
+//     console.log("Data:", data);
+//   }
+// });
+// _data.update("test", "newFile", { name: "Gabi" }, function (err) {
+//   if (err) {
+//     console.log("Error:", err);
+//   } else {
+//     console.log("Success");
+//   }
+// });
+
+_data.delete("test", "newFile", function (err) {
   if (err) {
     console.log("Error:", err);
   } else {
-    console.log("Data:", data);
-  }
-});
-_data.update("test", "newFile", { name: "Gabi" }, function (err) {
-  if (err) {
-    console.log("Error:", err);
-  } else {
-    console.log("Success");
+    console.log("File is deleted.");
   }
 });
 
