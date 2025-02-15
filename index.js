@@ -5,12 +5,14 @@ import { StringDecoder } from "string_decoder";
 import { mode } from "./config.js";
 import fs from "fs";
 import { lib as _data } from "./lib/data.js";
+import handlers from "./lib/handlers.js";
 
 // Testing
 // @TODO remove it later
-// _data.create("test", "newFile", { name: "Zoli" }, function (err) {
-//   console.log("This error", err);
-// });
+_data.create("test", "newFile", { name: "Zoli" }, function (err) {
+  console.log("This error", err);
+});
+
 // _data.read("test", "newFile1", function (err, data) {
 //   if (err) {
 //     console.log("Error:", err);
@@ -18,6 +20,7 @@ import { lib as _data } from "./lib/data.js";
 //     console.log("Data:", data);
 //   }
 // });
+
 // _data.update("test", "newFile", { name: "Gabi" }, function (err) {
 //   if (err) {
 //     console.log("Error:", err);
@@ -26,13 +29,13 @@ import { lib as _data } from "./lib/data.js";
 //   }
 // });
 
-_data.delete("test", "newFile", function (err) {
-  if (err) {
-    console.log("Error:", err);
-  } else {
-    console.log("File is deleted.");
-  }
-});
+// _data.delete("test", "newFile", function (err) {
+//   if (err) {
+//     console.log("Error:", err);
+//   } else {
+//     console.log("File is deleted.");
+//   }
+// });
 
 const httpServer = http.createServer(function (req, res) {
   server(req, res);
@@ -90,20 +93,6 @@ const server = (req, res) => {
       selectedHandler(data, handlerCallback);
     }
   });
-};
-
-let handlers = {};
-
-handlers.hello = (data, callback) => {
-  callback(406, { data: data.payload });
-};
-
-handlers.write = (data, callback) => {
-  callback(200, { data: data.payload });
-};
-
-handlers.ping = (data, callback) => {
-  callback(200);
 };
 
 const routing = {
