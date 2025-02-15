@@ -9,9 +9,9 @@ import handlers from "./lib/handlers.js";
 
 // Testing
 // @TODO remove it later
-_data.create("test", "newFile", { name: "Zoli" }, function (err) {
-  console.log("This error", err);
-});
+// _data.create("test", "newFile", { name: "Zoli" }, function (err) {
+//   console.log("This error", err);
+// });
 
 // _data.read("test", "newFile1", function (err, data) {
 //   if (err) {
@@ -99,6 +99,7 @@ const routing = {
   hello: handlers.hello,
   write: handlers.write,
   ping: handlers.ping,
+  users: handlers.users,
 };
 
 httpServer.listen(mode.httpPort, function () {
