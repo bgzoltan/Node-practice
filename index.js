@@ -100,6 +100,7 @@ const routing = {
   write: handlers.write,
   ping: handlers.ping,
   users: handlers.users,
+  tokens: handlers.tokens,
 };
 
 httpServer.listen(mode.httpPort, function () {
