@@ -66,7 +66,7 @@ const server = (req, res) => {
 
   req.on("end", () => {
     buffer += decoder.end();
-    const headers = { "Content-Type": "application/json" };
+    const headers = { ...req.headers, "Content-Type": "application/json" };
     const data = {
       pathName,
       method,
