@@ -5,6 +5,7 @@ environment.development = {
   httpsPort: 3001,
   name: "development",
   hashingSecret: "zoliSecret1968",
+  maxChecks: 5,
 };
 
 environment.production = {
@@ -12,6 +13,7 @@ environment.production = {
   httpsPort: 50001,
   name: "production",
   hashingSecret: "zoliSecret1968",
+  maxChecks: 5,
 };
 
 let selectedMode =
