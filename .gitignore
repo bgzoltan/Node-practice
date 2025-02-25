@@ -1,5 +1,5 @@
 https/*
 
-data/tokens/*.*
-data/users/*.*
-data/checks/*.*
+.data/tokens/*.*
+.data/users/*.*
+.data/checks/*.*
