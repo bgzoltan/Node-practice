@@ -1,5 +1,12 @@
 https/*
 
+config.js
+
 .data/tokens/*.*
 .data/users/*.*
 .data/checks/*.*
+
+node_modules/*
+
+package-lock.json
+.env

@@ -6,9 +6,19 @@ import { mode } from "./config.js";
 import fs from "fs";
 import { lib as _data } from "./lib/data.js";
 import handlers from "./lib/handlers.js";
+import { helpers } from "./lib/helpers.js";
 
 // Testing
 // @TODO remove it later
+
+helpers.sendTwilioSms(
+  "478699077",
+  "Dangerous weather is coming soon...",
+  function (err) {
+    console.log("SMS error", err);
+  }
+);
+
 // _data.create("test", "newFile", { name: "Zoli" }, function (err) {
 //   console.log("This error", err);
 // });
